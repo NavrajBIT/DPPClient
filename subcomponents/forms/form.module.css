@@ -1,0 +1,58 @@
+.myform {
+  background-color: var(--accent-10);
+  padding: var(--padding-main);
+  border: 2px solid var(--accent-20);
+  border-radius: var(--border-radius-small);
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-light);
+  width: 100%;
+  max-width: var(--max-width-content);
+  box-shadow: 0 0 10px 3px var(--secondary-10);
+}
+
+.formtitle {
+  color: var(--text-bright);
+  text-decoration: underline;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.inputcontainer {
+  position: relative;
+  min-height: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.inputcontainer input,
+.inputcontainer textarea {
+  width: 100%;
+  padding: var(--padding-light);
+  border: none;
+  border-radius: var(--border-radius-light);
+  background-color: var(--primary-80);
+  color: var(--text-bright);
+  font-size: 1.25rem;
+  outline: none;
+  border-bottom: 1px solid var(--accent-20);
+}
+
+.inputcontainer label {
+  color: var(--text-dark);
+  height: 1.5rem;
+}
+
+.booleaninputcontainer {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-light);
+  color: var(--text-primary);
+}
+
+.booleaninputcontainer input {
+  width: 1rem;
+  height: 1rem;
+}

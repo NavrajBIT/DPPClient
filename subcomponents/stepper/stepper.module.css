@@ -1,0 +1,23 @@
+.steppercontainer {
+  width: 100%;
+  max-width: var(--max-width-content);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.unselectedStep {
+  min-width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 1rem;
+  background-color: var(--accent-30);
+}
+
+.completedStep {
+  background-color: var(--accent-10);
+}
+
+.selectedStep {
+  background-color: var(--accent-10);
+  box-shadow: 0 0 10px 5px var(--accent-30);
+}

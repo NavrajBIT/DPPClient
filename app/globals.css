@@ -1,0 +1,71 @@
+:root {
+  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+  --max-width: 1400px;
+  --max-width-content: 500px;
+  --min-height-page: 100vh;
+  --border-radius: 20px;
+  --border-radius-small: 10px;
+
+  --primary: #3a0201;
+  --secondary: #d62839;
+  --secondary-10: #d6283975;
+  --accent-10: #175676;
+  --accent-20: #4ba3c3;
+  --accent-30: #cce6f4;
+  --text-bright: #ffffff;
+  --text-accent: #cce6f4;
+  --text-primary: #e9cccc;
+  --text-dark: #be9a99;
+  --filter-1: linear-gradient(to right, #3a02017c, #1756767a);
+  --filter-2: linear-gradient(to right, #3a02017c, #1756767a);
+
+  --navbar-height: 100px;
+  --footer-overflow: 50px;
+
+  --padding-main: 20px;
+  --padding-light: 10px;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--primary);
+  height: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  background: none;
+  border: none;
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-10);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-20);
+}
