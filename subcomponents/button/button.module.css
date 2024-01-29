@@ -1,0 +1,82 @@
+.navbutton {
+  padding: var(--padding-light);
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.navbutton:hover {
+  color: var(--accent-20);
+  text-decoration: underline;
+  transition: 0.5s;
+}
+
+.primarybutton {
+  padding: var(--padding-light);
+  font-size: 1.5rem;
+  color: var(--text-bright);
+  font-weight: 700;
+  background-color: var(--accent-20);
+  border-radius: var(--border-radius-small);
+  border: 2px solid transparent;
+  display: flex;
+  gap: var(--padding-light);
+  align-items: center;
+  justify-content: center;
+}
+.secondarybutton {
+  padding: var(--padding-light);
+  font-size: 1.5rem;
+  color: var(--text-bright);
+  font-weight: 700;
+  background-color: var(--secondary);
+  border-radius: var(--border-radius-small);
+  border: 2px solid transparent;
+  display: flex;
+  gap: var(--padding-light);
+  align-items: center;
+  justify-content: center;
+}
+
+.primarybutton:hover,
+.secondarybutton:hover {
+  border: 2px solid var(--text-bright);
+  box-shadow: 0 0 10px 5px var(--accent-20);
+  background-color: var(--accent-10);
+  transition: 0.5s;
+}
+
+.linkbutton {
+  text-decoration: underline;
+  color: var(--accent-20);
+}
+.linkbutton:hover {
+  color: var(--text-bright);
+}
+
+.loadingbutton {
+  animation: loadinganim 2s linear infinite;
+  background: linear-gradient(
+    -45deg,
+    var(--accent-10),
+    var(--accent-20),
+    var(--primary),
+    var(--secondary),
+    var(--primary),
+    var(--accent-20),
+    var(--accent-10)
+  );
+  background-size: 400% 100%;
+}
+
+@keyframes loadinganim {
+  0% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 50% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
