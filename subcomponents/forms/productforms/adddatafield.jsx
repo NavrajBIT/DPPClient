@@ -1,0 +1,51 @@
+"use client";
+import { useState } from "react";
+import Form from "../form";
+import { useRouter } from "next/navigation";
+import API from "@/subcomponents/api/api";
+
+const Adddatafieldform = ({ productId, close }) => {
+  const api = API();
+
+  const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    let endpoint = `product/${productId}/datafield`;
+    let method = "POST";
+    await api
+      .crud(method, endpoint, { name, product_id: productId })
+      .then((res) => {
+        console.log(res);
+        if (res.status >= 200 && res.status <= 299) {
+          close();
+        }
+      })
+      .catch((err) => console.log(err));
+    setIsLoading(false);
+  };
+
+  const formData = [
+    {
+      type: "text",
+      label: "Data Field Name",
+      required: true,
+      maxLength: 100,
+      value: name,
+      setValue: (e) => setName(e.target.value),
+    },
+  ];
+
+  return (
+    <Form
+      title={"Add Data Field"}
+      formData={formData}
+      handleSubmit={handleSubmit}
+      button={"Add +"}
+      isLoading={isLoading}
+    />
+  );
+};
+
+export default Adddatafieldform;
