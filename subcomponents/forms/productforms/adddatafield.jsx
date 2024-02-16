@@ -8,6 +8,7 @@ const Adddatafieldform = ({ productId, close }) => {
   const api = API();
 
   const [name, setName] = useState("");
+  const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -15,7 +16,7 @@ const Adddatafieldform = ({ productId, close }) => {
     let endpoint = `product/${productId}/datafield`;
     let method = "POST";
     await api
-      .crud(method, endpoint, { name, product_id: productId })
+      .crud(method, endpoint, { fieldName: name, field_description: value })
       .then((res) => {
         console.log(res);
         if (res.status >= 200 && res.status <= 299) {
@@ -34,6 +35,14 @@ const Adddatafieldform = ({ productId, close }) => {
       maxLength: 100,
       value: name,
       setValue: (e) => setName(e.target.value),
+    },
+    {
+      type: "text",
+      label: "Data Field description",
+      required: true,
+      maxLength: 100,
+      value: value,
+      setValue: (e) => setValue(e.target.value),
     },
   ];
 

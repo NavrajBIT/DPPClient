@@ -2,6 +2,8 @@
 import style from "./form.module.css";
 import Button from "../button/button";
 import { useRef, useState } from "react";
+import AsyncSelect from "react-select/async";
+import API from "@/subcomponents/api/api";
 
 const Form = ({
   formData,
@@ -66,6 +68,13 @@ export const InputField = ({ inputData }) => {
 
   if (inputData.type === "checkbox")
     return <BooleanInput inputData={inputData} />;
+
+  if (inputData.type === "selectUsers")
+    return <UserInput inputData={inputData} />;
+
+  if (inputData.type === "image") return <ImageInput inputData={inputData} />;
+
+  if (inputData.type === "file") return <FileInput inputData={inputData} />;
 
   const handleFocus = () => {
     setIsFocus(true);
@@ -143,6 +152,61 @@ const BooleanInput = ({ inputData }) => {
         onChange={inputData.setValue}
       />
       <label htmlFor={id}>{inputData.label}</label>
+    </div>
+  );
+};
+
+const UserInput = ({ inputData }) => {
+  const api = API();
+  const loadOptions = async () => {
+    return api.crud("GET", "organization/users");
+  };
+
+  return (
+    <div className={""}>
+      <AsyncSelect
+        cacheOptions
+        defaultOptions
+        value={inputData.value}
+        getOptionLabel={(e) => e.username}
+        getOptionValue={(e) => e.id}
+        loadOptions={loadOptions}
+        onChange={inputData.onvaluechange}
+        isMulti
+        placeholder={inputData.label}
+      />
+    </div>
+  );
+};
+
+const ImageInput = ({ inputData }) => {
+  return (
+    <label htmlFor="image">
+      <p style={{ color: "var(--text-dark)", marginBottom: "15px" }}>
+        Profile Image
+      </p>
+      <input type="file" name="image" id="image" />
+      {/* <input type="file" name="image" id="image" style={{ display: "none" }} /> */}
+      {/* <img
+        src={inputData.value}
+        alt="product image"
+        style={{ height: "200px", width: "300px" }}
+      /> */}
+    </label>
+  );
+};
+
+const FileInput = ({ inputData }) => {
+  return (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr 1fr",
+        padding: "10px",
+      }}
+    >
+      <p style={{ color: "var(--text-dark)" }}>{inputData.label}</p>
+      <input type="file" />
     </div>
   );
 };

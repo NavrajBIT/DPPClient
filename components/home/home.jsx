@@ -1,7 +1,12 @@
+"use client";
+
 import Page from "@/subcomponents/containers/page";
 import Button from "@/subcomponents/button/button";
+import API from "@/subcomponents/api/api";
 
 const Home = () => {
+  const api = API();
+
   return (
     <Page
       style={{

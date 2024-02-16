@@ -1,13 +1,14 @@
 import { useRouter } from "next/navigation";
 
-const API_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
+const API_URL = process.env.backendURL;
 
 const API = () => {
   const router = useRouter();
 
   async function crud(requestMethod, endpoint, data, isFormdata) {
     const token = localStorage.getItem("jwtToken");
-    const requestOptions = isFormdata
+
+    var requestOptions = isFormdata
       ? {
           method: requestMethod,
           headers: {
@@ -23,6 +24,10 @@ const API = () => {
           },
           body: data ? JSON.stringify(data) : null,
         };
+
+    if (data instanceof Object) {
+      requestOptions.body = data;
+    }
 
     try {
       const response = await fetch(API_URL + endpoint + "/", requestOptions);
@@ -130,10 +135,40 @@ const API = () => {
     }
   }
 
+  async function register(method, endpoint, data) {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: data ? JSON.stringify(data) : undefined,
+    };
+
+    try {
+      const response = await fetch(API_URL + endpoint, requestOptions);
+      const responseData = await response.json();
+      console.log(response);
+      // if (responseData["access"]) {
+      //   localStorage.setItem("jwtToken", responseData.access);
+      //   const currentTime = new Date().getTime();
+      //   localStorage.setItem("lastRefresh", currentTime.toString());
+      //   return true;
+      // } else {
+      //   localStorage.setItem("jwtToken", null);
+      //   localStorage.setItem("jwtRefresh", null);
+      //   return false;
+      // }
+    } catch (error) {
+      console.log("API call error:", error);
+      return false;
+    }
+  }
+
   return {
     crud,
     getToken,
     refreshToken,
+    register,
   };
 };
 

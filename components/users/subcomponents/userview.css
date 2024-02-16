@@ -1,0 +1,12 @@
+.userTable tr th {
+  padding: 20px 0;
+  border-bottom: 1px solid #2a2a38;
+  color: grey;
+}
+
+.userTable tr td {
+  padding: 20px 0;
+  border-bottom: 1px solid #2a2a38;
+  text-align: center;
+  color: white;
+}

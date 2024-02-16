@@ -12,6 +12,7 @@ const Loginform = () => {
   const [password, setPassword] = useState("");
   const [rememberme, setRememberme] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -23,7 +24,7 @@ const Loginform = () => {
       .then((res) => {
         console.log(res);
         if (res.error) {
-          alert(res.error);
+          setError(res.error);
         } else {
           router.back();
         }
@@ -32,6 +33,8 @@ const Loginform = () => {
     setIsLoading(false);
   };
 
+  console.log(username);
+
   const formData = [
     {
       type: "text",
@@ -39,7 +42,10 @@ const Loginform = () => {
       required: true,
       maxLength: 50,
       value: username,
-      setValue: (e) => setUsername(e.target.value),
+      setValue: (e) => {
+        setUsername(e.target.value);
+        setError("");
+      },
     },
     {
       type: "password",
@@ -47,7 +53,10 @@ const Loginform = () => {
       required: true,
       maxLength: 50,
       value: password,
-      setValue: (e) => setPassword(e.target.value),
+      setValue: (e) => {
+        setPassword(e.target.value);
+        setError("");
+      },
     },
     {
       type: "checkbox",
@@ -58,25 +67,34 @@ const Loginform = () => {
   ];
 
   return (
-    <Form
-      title={"Login"}
-      formData={formData}
-      handleSubmit={handleSubmit}
-      button={"Login"}
-      isLoading={isLoading}
-    >
+    <div style={{ width: "var(--max-width-content)" }}>
       <div>
-        <Button
-          text={"Forgot Password"}
-          variant={"link"}
-          href={"/resetpassword"}
-        />
+        <div style={{ color: "red", padding: "4% 4%", height: "50px" }}>
+          {error}
+        </div>
       </div>
-      <div style={{ color: "var(--text-primary)" }}>
+      <>
+        <Form
+          title={"Login"}
+          formData={formData}
+          handleSubmit={handleSubmit}
+          button={"Login"}
+          isLoading={isLoading}
+        >
+          <div>
+            <Button
+              text={"Forgot Password"}
+              variant={"link"}
+              href={"/resetpassword"}
+            />
+          </div>
+          {/* <div style={{ color: "var(--text-primary)" }}>
         Don't have an account?{" "}
         <Button text={"Signup"} variant={"link"} href={"/signup"} />
-      </div>
-    </Form>
+      </div> */}
+        </Form>
+      </>
+    </div>
   );
 };
 

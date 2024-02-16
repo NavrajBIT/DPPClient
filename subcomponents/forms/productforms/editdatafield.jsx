@@ -4,26 +4,19 @@ import Form from "../form";
 import { useRouter } from "next/navigation";
 import API from "@/subcomponents/api/api";
 
-const Adddatapointform = ({ datafieldId, close, productId }) => {
+const Editdatafieldform = ({ productId, close, data, updateData }) => {
   const api = API();
 
-  const [name, setName] = useState("");
-  const [value, setValue] = useState("");
+  const [name, setName] = useState(data ? data.fieldName : "");
+  const [value, setValue] = useState(data ? data.field_description : "");
   const [isLoading, setIsLoading] = useState(false);
-  const [admin, setAdmin] = useState([]);
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    let endpoint = `product/${productId}/datafield/${datafieldId}/datapoint`;
-    let method = "POST";
+    let endpoint = `product/${productId}/datafield/${data.datafieldId}`;
+    let method = "PUT";
     await api
-      .crud(method, endpoint, {
-        dataPointName: datafieldId,
-        info: value,
-        dataPointManager: admin.map((user) => {
-          return user.id;
-        }),
-      })
+      .crud(method, endpoint, { fieldName: name, field_description: value })
       .then((res) => {
         console.log(res);
         if (res.status >= 200 && res.status <= 299) {
@@ -32,16 +25,13 @@ const Adddatapointform = ({ datafieldId, close, productId }) => {
       })
       .catch((err) => console.log(err));
     setIsLoading(false);
-  };
-
-  const handleChange = (data) => {
-    setAdmin(data);
+    updateData();
   };
 
   const formData = [
     {
       type: "text",
-      label: "Name",
+      label: "Data Field Name",
       required: true,
       maxLength: 100,
       value: name,
@@ -49,29 +39,23 @@ const Adddatapointform = ({ datafieldId, close, productId }) => {
     },
     {
       type: "text",
-      label: "Information",
+      label: "Data Field description",
       required: true,
       maxLength: 100,
       value: value,
       setValue: (e) => setValue(e.target.value),
     },
-    {
-      type: "selectUsers",
-      label: "Select User",
-      value: admin,
-      onvaluechange: handleChange,
-    },
   ];
 
   return (
     <Form
-      title={"Add Data Point"}
+      title={"Edit Data Field"}
       formData={formData}
       handleSubmit={handleSubmit}
-      button={"Add Data Point"}
+      button={"Update"}
       isLoading={isLoading}
     />
   );
 };
 
-export default Adddatapointform;
+export default Editdatafieldform;

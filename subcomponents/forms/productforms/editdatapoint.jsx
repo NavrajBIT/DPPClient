@@ -4,23 +4,24 @@ import Form from "../form";
 import { useRouter } from "next/navigation";
 import API from "@/subcomponents/api/api";
 
-const Adddatapointform = ({ datafieldId, close, productId }) => {
+const EditdataPointform = ({ script, data, updateData }) => {
   const api = API();
-
-  const [name, setName] = useState("");
-  const [value, setValue] = useState("");
+  const [name, setName] = useState(data ? data.dataPointName : "");
+  const [value, setValue] = useState(data ? data.info : "");
   const [isLoading, setIsLoading] = useState(false);
-  const [admin, setAdmin] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(
+    data ? data.dataPointManager : []
+  );
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    let endpoint = `product/${productId}/datafield/${datafieldId}/datapoint`;
-    let method = "POST";
+    let endpoint = `product/${script.productId}/datafield/${script.df_id}/datapoint/${data.datapointId}`;
+    let method = "PUT";
     await api
       .crud(method, endpoint, {
-        dataPointName: datafieldId,
+        dataPointName: name,
         info: value,
-        dataPointManager: admin.map((user) => {
+        dataPointManager: selectedUser.map((user) => {
           return user.id;
         }),
       })
@@ -32,16 +33,17 @@ const Adddatapointform = ({ datafieldId, close, productId }) => {
       })
       .catch((err) => console.log(err));
     setIsLoading(false);
+    updateData();
   };
 
-  const handleChange = (data) => {
-    setAdmin(data);
+  const handleChange = (value) => {
+    setSelectedUser(value);
   };
 
   const formData = [
     {
       type: "text",
-      label: "Name",
+      label: "Data Point Name",
       required: true,
       maxLength: 100,
       value: name,
@@ -49,7 +51,7 @@ const Adddatapointform = ({ datafieldId, close, productId }) => {
     },
     {
       type: "text",
-      label: "Information",
+      label: "Data Point description",
       required: true,
       maxLength: 100,
       value: value,
@@ -57,21 +59,21 @@ const Adddatapointform = ({ datafieldId, close, productId }) => {
     },
     {
       type: "selectUsers",
-      label: "Select User",
-      value: admin,
+      label: "Select Data Point Admin",
+      value: selectedUser,
       onvaluechange: handleChange,
     },
   ];
 
   return (
     <Form
-      title={"Add Data Point"}
+      title={"Edit Data Point"}
       formData={formData}
       handleSubmit={handleSubmit}
-      button={"Add Data Point"}
+      button={"Update"}
       isLoading={isLoading}
     />
   );
 };
 
-export default Adddatapointform;
+export default EditdataPointform;

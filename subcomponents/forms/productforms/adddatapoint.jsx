@@ -4,23 +4,23 @@ import Form from "../form";
 import { useRouter } from "next/navigation";
 import API from "@/subcomponents/api/api";
 
-const Adddatapointform = ({ datafieldId, close, productId }) => {
+const AdddataPointform = ({ params, close }) => {
   const api = API();
 
   const [name, setName] = useState("");
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [admin, setAdmin] = useState([]);
+  const [selectedUser, setSelectedUser] = useState([]);
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    let endpoint = `product/${productId}/datafield/${datafieldId}/datapoint`;
+    let endpoint = `product/${params.productId}/datafield/${params.df_id}/datapoint`;
     let method = "POST";
     await api
       .crud(method, endpoint, {
-        dataPointName: datafieldId,
+        dataPointName: name,
         info: value,
-        dataPointManager: admin.map((user) => {
+        dataPointManager: selectedUser.map((user) => {
           return user.id;
         }),
       })
@@ -34,14 +34,14 @@ const Adddatapointform = ({ datafieldId, close, productId }) => {
     setIsLoading(false);
   };
 
-  const handleChange = (data) => {
-    setAdmin(data);
+  const handleChange = (value) => {
+    setSelectedUser(value);
   };
 
   const formData = [
     {
       type: "text",
-      label: "Name",
+      label: "Data Point Name",
       required: true,
       maxLength: 100,
       value: name,
@@ -49,7 +49,7 @@ const Adddatapointform = ({ datafieldId, close, productId }) => {
     },
     {
       type: "text",
-      label: "Information",
+      label: "Data Point description",
       required: true,
       maxLength: 100,
       value: value,
@@ -57,8 +57,8 @@ const Adddatapointform = ({ datafieldId, close, productId }) => {
     },
     {
       type: "selectUsers",
-      label: "Select User",
-      value: admin,
+      label: "Select Data Point Admin",
+      value: selectedUser,
       onvaluechange: handleChange,
     },
   ];
@@ -68,10 +68,10 @@ const Adddatapointform = ({ datafieldId, close, productId }) => {
       title={"Add Data Point"}
       formData={formData}
       handleSubmit={handleSubmit}
-      button={"Add Data Point"}
+      button={"Add +"}
       isLoading={isLoading}
     />
   );
 };
 
-export default Adddatapointform;
+export default AdddataPointform;
